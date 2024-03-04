@@ -1,1 +1,31 @@
 
+/*
+Asynchronous Code Execution in NodeJs:
+console.log("first");
+fs.readFile(__filename, ()=>{
+    console.log('second');
+})
+console.log('third');
+*/
+=>The 'second' log statement is within a callback function passed to the fs read file 
+=>The main thread of execution always starts in the global scope 
+=> So the global function is pushed onto the stack
+=> Excution comes to line one to one milliseconds console.log is pushed onto the stack
+=> First is logged in the console
+=> The function is popped off the stack
+=> Execution now moves on to line 2
+=> The read file method gets pushed onto the stack
+=> ReaFile is an async operation that is offloaded to the libuv so what happens now is that the callback function is handed over to the libuv
+=> Javascript pops off the method from the call stack because its job is done as far execution of line 2 concerned
+=> In the background the libuv starts to read the file contents on a separate thread at 3 milliseconds 
+=>  javascript proceeds to line 5, It pushes the log function into the stack & calls stack execute & logs to the console 
+=> The file read task is completed in the thread pool, and the associated callback function is now pushed  onto the call stack 
+=> Within the callback function we have a log statement, that is pushed onto the call stack & log to the console, and the function is popped off
+=> There is no more statement to execute the callback function
+=> Finally global also popped from the call stack
+
+Event Loop Execution Order :
+=> User-written synchronous javascript code takes higher priority over async code that the runtime would like to execute.
+=> Only after the call stack is empty, the event loop comes into the picture.
+=> 
+
