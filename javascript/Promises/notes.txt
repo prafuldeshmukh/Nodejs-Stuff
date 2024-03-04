@@ -1,0 +1,52 @@
+A Promise is an object representing the eventual completion or failure of an asynchronous operation. Essentially, it's a returned object to which you attach callbacks, instead of passing callbacks into a function.
+
+A Promise is in one of these states:
+
+Pending: the Promise’s outcome hasn’t yet been determined, because the asynchronous operation that will produce its result hasn’t completed yet.
+ 
+Fulfilled: the asynchronous operation has completed, and the Promise has a resulting value.
+ 
+Rejected: the asynchronous operation failed, and the Promise will never be fulfilled. In the rejected state, a Promise has a reason that indicates why the operation failed.
+The .then() Method
+The .then() function is a powerful tool that we attach to our Promise objects. It schedules a callback function to be run when the Promise is resolved, allowing us to specify what happens next after our Promise has been executed. Here's its basic syntax:
+
+
+promise.then(onFulfilled[, onRejected]);
+The .then() method returns a Promise. It takes up to two arguments: callback functions for the success and failure cases of the Promise.
+
+Let's look at an example:
+
+let promise = new Promise(function(resolve, reject) {
+
+setTimeout(() => resolve("Done!"), 1000);
+});
+
+promise.then(
+  result => console.log(result), // shows "Done!" after 1 second
+  error => console.log(error) // doesn't run
+);
+Output 
+
+In this example, after the promise is resolved, it then triggers the onFulfilled function to log the result to the console.
+
+Chaining .then()
+One of the key features of .then() is the ability to chain them together for complex Promise sequences. When a callback returns a value, it becomes the result of the whole Promise chain.
+
+new Promise(function(resolve, reject) {
+  setTimeout(() => resolve(1), 1000); 
+})
+.then(function(result) { 
+  console.log(result); 
+  return result * 2;
+})
+.then(function(result) { 
+  console.log(result);
+  return result * 2;
+})
+.then(function(result) {
+  console.log(result);
+  return result * 2;
+});
+Output
+
+In this example, each .then() shows the result of the previous Promise and then returns a new value, which becomes the input for the next .then().
