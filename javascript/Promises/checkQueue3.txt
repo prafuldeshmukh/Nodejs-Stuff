@@ -1,0 +1,6 @@
+/*
+   Experiment 13 - Inference 
+   When running setTimeout with delay 0s and setImmediate method, the order of execution can neved be guaranteed
+*/
+setTimeout(()=> console.log("This is setTimeout 1"),0);
+setImmediate(()=> console.log("This is setImmediate 1"),0);
