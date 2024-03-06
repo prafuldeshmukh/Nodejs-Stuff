@@ -1,0 +1,51 @@
+
+/*
+  Experiment 3 Inference :
+  Callbacks in the microtask queues are excuted before callbacks in the timer queue
+
+  Experiemnt 4 Inference :
+  Callbacks in microtask queues are executed in between the execution of callbacks in the timer queue
+
+  Experiment 5 Interefece:
+  Timer queue callbacks are executed in FIFO order
+*/
+setTimeout(()=>{
+   console.log("This is setTimeout 1");
+},0);
+setTimeout(()=>{
+    console.log("This is setTimeout 2");
+    process.nextTick(()=>{
+      console.log("This is the inner next tick inside timeout");
+    });
+ },0);
+ setTimeout(()=>{
+    console.log("This is setTimeout 3");
+ },0);
+
+ setTimeout(()=>{
+    console.log("This is setTimeout 4");
+ },100);
+ setTimeout(()=>{
+    console.log("This is setTimeout 5");
+ },200);
+ setTimeout(()=>{
+    console.log("This is setTimeout 6");
+ },300);
+ 
+ process.nextTick(()=> console.log("This is process.nextTick 1"));
+process.nextTick(()=>{
+    console.log("This is process.nextTick 2");
+    process.nextTick(()=> console.log("This is next process.next inside process.next"));
+});
+process.nextTick(()=> console.log("This is process.nextTick 3"));
+
+Promise.resolve().then(()=>console.log("This is Promise.resolve 1"));
+Promise.resolve().then(()=> {
+    console.log("This is Promise.resolve 2");
+    process.nextTick(()=>{
+        console.log("This is next process nextTick inside Promise then block")
+    })
+});
+Promise.resolve().then(()=>{
+    console.log("This is Promise.resolve 3");
+})

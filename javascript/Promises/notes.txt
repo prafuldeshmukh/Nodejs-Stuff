@@ -1,8 +1,9 @@
-A Promise is an object representing the eventual completion or failure of an asynchronous operation. Essentially, it's a returned object to which you attach callbacks, instead of passing callbacks into a function.
+A Promise is an object representing the eventual completion or failure of an asynchronous operation.
+Essentially, it's a returned object to which you attach callbacks, instead of passing callbacks into a function.
 
 A Promise is in one of these states:
 
-Pending: the Promise’s outcome hasn’t yet been determined, because the asynchronous operation that will produce its result hasn’t completed yet.
+Pending: the Promise’s outcome hasn’t yet been determined, because the asynchronous operation that will produce its result hasn’t been completed yet.
  
 Fulfilled: the asynchronous operation has completed, and the Promise has a resulting value.
  

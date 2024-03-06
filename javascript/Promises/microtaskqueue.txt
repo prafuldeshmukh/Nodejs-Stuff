@@ -1,0 +1,47 @@
+/*
+  this gets exceuted on the call stack , queues up a callback function into the next queues and is popped off the stack, 
+  still we have synchronous code for excution so the callback function has to wait for its turn
+  control enters the event loop , the callback function from next queue is dequed and pushed onto the call stack
+*/
+/*
+  Experiment 1 Inference:
+  All user written synchronous javascript code takes priority over async code that the runtime would like to evenually execute
+*/
+
+// console.log("console.log 1");
+// process.nextTick(()=> console.log('this is process.next tick'));
+// console.log("console.log 2");
+
+/*
+  Experiment 2 Inference:
+   All callbacks in nextTick queues are executed before callbacks in promise queue
+*/
+
+/*Promise.resolve().then(()=> console.log('this is promise.resolve 1'));
+process.nextTick(()=> console.log("This is process.nextTick 1"));
+*/
+
+process.nextTick(()=> console.log("This is process.nextTick 1"));
+process.nextTick(()=>{
+    console.log("This is process.nextTick 2");
+    process.nextTick(()=> console.log("This is next process.next inside process.next"));
+});
+process.nextTick(()=> console.log("This is process.nextTick 3"));
+
+Promise.resolve().then(()=>console.log("This is Promise.resolve 1"));
+Promise.resolve().then(()=> {
+    console.log("This is Promise.resolve 2");
+    process.nextTick(()=>{
+        console.log("This is next process nextTick inside Promise then block")
+    })
+});
+Promise.resolve().then(()=>{
+    console.log("This is Promise.resolve 3");
+})
+
+/*
+    Two main reasons to use process.nextTick 
+    1. To allow users  to handle errors , cleanup  any then unneeded resourcses 
+    2. To allow a callback to run after the call stack has unwound but before the event loop continues.
+    
+*/

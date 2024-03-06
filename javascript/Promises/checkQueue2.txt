@@ -1,0 +1,11 @@
+/*
+Experiment 12 Inference :
+Microtask queques callbacks are executed in between check quque callbacks
+*/
+setImmediate(()=> console.log("This is setImmediate 1"));
+setImmediate(()=>{
+    console.log("This is setImmediate 2");
+    process.nextTick(()=> console.log("This is process nexttick inside setImmediate"));
+    Promise.resolve().then(()=> console.log("This is process resolve inside setImmediate"));
+})
+setImmediate(()=> console.log("This is setImmediate 3"));

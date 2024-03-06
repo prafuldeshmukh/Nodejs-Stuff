@@ -1,0 +1,147 @@
+
+/*
+=> Promise.all 
+Promise.all([p1,p2,p3]);
+             p1 => 3s
+             p2 => 1s
+             p3 => 2s
+             
+             => Promise.all takesn an array of promises
+             => Suppose if all of them get successful it will return u an array of all the three values
+                from these promises
+                U will get the result after 3 seconds
+                because three parallel API calls were made and after 3 seconds we get the last result so it will 
+                wait for all of the API call to finish
+            => It will collect all of these result it will give u an array of all these result
+            => But if it fails  if any of them fails it will not move ahead , it will just quickly return the result
+            => It is also known as fail fast
+            => If any has to fail the quickly fail
+            => UseCases u might want to use When u want these behaviour That i want the result of either all 
+               these promises or i don't want result of any of them I want wuick error that is where will use this promise.all
+
+  => Promise.allSettled =
+        => It will only return the results once all the promises are settled
+                        Promise.allSettled([p1,p2,p3]);
+                              p1=> 3s - success
+                              p2  => 1s => fail
+                              p3 => 2s => success
+                        =>  It is exactly similar to promise.all  in success cases 
+                        =>  But in failure cases even if one API call fails it will still wait for all the API calls to finish
+                        => Then you will get this array after 3 seconds u will get the value or error according to 
+                        what the promises u sent in the same order 
+                        => so if P1 was fulfilled then the values success value will come here
+                            p2 gets rejected the error will come over here P3 gets success the success value 
+                            will come here 
+                        => it will be given an object [{"status":"fulfilled", value:"P1 Success"},{"status":"rejected", reason:"P3 Fail"}]    
+
+  Promise.race =>  Promise.race([p1, p2, p3]);
+                     p1=> 3s 
+                     p2 => 5s 
+                     p3 => 2s
+                     => It is kind of a race p1,p2 & p3 are racing 
+                     => it is seetle with succes or failure u got an reposne whthere it is succses or failure
+                     => It will return the resukts as soon as the first settle promises 
+                     => The settled promise can be success or failure 
+                     => if it is success it will retun the succes or if it is error , It will return the error
+                     => first settled promises
+    Promise.any =>  
+                 Promise.any([p1,p2,p3]) => in case of all failed it will retunr an aggregate error                   
+                                           
+                 => It will return the result of first settled resolved or first settled success
+                 => If the first settled promise fails It will wait for the second if the second also fails it will wait for 
+                    the third and it will keep on waiting till it gets a success
+                 => It is called as a success seeking API / Seeking for first success , It will quickly return the result
+                 => what if all of them fails then it will give an aggregate error 
+
+                 
+                 
+          settled => Got the result => can be success or failure  => lingo => Jargon
+             => resolve => success => fulfilled
+             => reject => failure => rejected
+
+
+
+any.js
+
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => reject("P1 Fail"), 3000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => reject("P2 Fail"), 5000);
+    //setTimeout(() => reject("P2 Reject"), 1000);
+});
+
+const p3 = new Promise((resolve, reject) => {
+    //setTimeout(() => resolve("P3 Success"), 2000);
+    setTimeout(() => reject("P3 Fail"), 1000);
+});
+// 
+Promise.any([p1, p2, p3]).then(res => {
+    console.log(res);
+}).catch(err => { console.log(err); console.error(err.errors) });
+
+// p1 & p3  - success, p3 - fail
+
+
+promiseAll.js
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("P1 Success"), 3000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("P2 Success"), 1000);
+    //setTimeout(() => reject("P2 Reject"), 1000);
+});
+
+const p3 = new Promise((resolve, reject) => {
+    //setTimeout(() => resolve("P3 Success"), 2000);
+    setTimeout(()=>reject("P3 Reject"), 2000);
+});
+
+Promise.all([p1, p2, p3]).then(res => {
+    console.log(res);
+}).catch(err => console.error(err));
+
+
+promiseAllSettle:
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("P1 Success"), 3000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("P2 Success"), 1000);
+    //setTimeout(() => reject("P2 Reject"), 1000);
+});
+
+const p3 = new Promise((resolve, reject) => {
+    //setTimeout(() => resolve("P3 Success"), 2000);
+    setTimeout(()=>reject("P3 Reject"), 2000);
+});
+// 
+Promise.allSettled([p1, p2, p3]).then(res => {
+    console.log(res);
+}).catch(err => console.error(err));
+
+race.js
+
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("P1 Success"), 3000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+   setTimeout(() => resolve("P2 Success"), 1000);
+    //setTimeout(() => reject("P2 Reject"), 1000);
+});
+
+const p3 = new Promise((resolve, reject) => {
+    //setTimeout(() => resolve("P3 Success"), 2000);
+    setTimeout(()=>reject("P3 Reject"), 2000);
+});
+// 
+Promise.race([p1, p2, p3]).then(res => {
+    console.log(res);
+}).catch(err => console.error(err));
+
+                  
+*/

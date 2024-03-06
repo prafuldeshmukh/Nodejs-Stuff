@@ -1,0 +1,18 @@
+/*
+ Experiment 14  Inferenec:
+ Close queue callbacks are executed after all other queues callbacks in a given iteration of the event loop
+*/
+
+const fs = require('fs');
+
+const readableStream = fs.createReadStream(__filename);
+readableStream.close();
+
+readableStream.on("close",()=>{
+    console.log("This is from readbaleStram close event callbacks");
+})
+
+setTimeout(()=> console.log("This is setTimeout 1"));
+setImmediate(()=> console.log("This is setImmediate 1"));
+process.nextTick(()=> console.log("This is next tick 1"));
+Promise.resolve().then(()=> console.log("This is Promise resolve 1"));

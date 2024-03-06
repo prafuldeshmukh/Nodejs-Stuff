@@ -1,0 +1,29 @@
+/*
+  Check Queue :
+  To queue a callback function into the check queue, we can use a function called setImmediate
+*/
+
+/*
+  Experiment 8 Inference
+  I/O queue callbacks are exected after microtasks queques callbacks and timer queue callbacks
+  Polling I/O is a method of checking the status of a device or a data source at regular intervals,
+   and performing an action if a certain condition is met. 
+   For example, a microcontroller can poll a sensor to read its value, or poll a serial port to see if there is any data available.
+*/
+/*
+  Experiment 8 Inference :
+  I/O events are polled and callback functions are added to the i/o queue only after the i/o is complete.
+*/
+
+const fs = require("fs");
+fs.readFile(__filename, ()=>{
+    console.log("This is readfile 1");
+});
+process.nextTick(()=> {    
+    console.log("This is process next tick 1");
+});
+Promise.resolve().then(()=> {
+    console.log("This is Promise Then 1");
+});
+setTimeout(()=> console.log("This is timeout 1 "), 0);
+setImmediate(()=> console.log("This is setImmediate timeout 1"));

@@ -1,0 +1,11 @@
+/*
+Experiement 6 Inference :
+Callbacks in the microtask queues are executed before callbacks in the I/O queue
+*/
+const fs = require('fs');
+fs.readFile(__filename,()=>{
+    console.log("This is readfile 1");
+});
+
+process.nextTick(()=> console.log("This is process next 1"));
+Promise.resolve().then(()=> console.log("This is Promise.then 1"));

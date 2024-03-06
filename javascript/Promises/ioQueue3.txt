@@ -1,0 +1,17 @@
+/*
+  Experiment 8 Inference
+  I/O queue callbacks are ececuted after microtasks queques callbacks and timer queue callbacks
+*/
+
+const fs = require("fs");
+fs.readFile(__filename, ()=>{
+    console.log("This is readfile 1");
+});
+process.nextTick(()=> {    
+    console.log("This is process next tick 1");
+});
+Promise.resolve().then(()=> {
+    console.log("This is Promise Then 1");
+});
+setTimeout(()=> console.log("This is timeout 1 "), 0);
+
