@@ -12,7 +12,7 @@
       later point of time 
   => That why callback plays a very imp role in writing asynchronous code in javascript
   => Suppose we are buliding ecommerce website , Ecommerce website can't exist without cart
-
+   => A callback is a function passed as an argument to another function and is executed once the asynchronous operation completes. Callbacks can result in deeply nested code structures, also known as callback hell, making the code harder to read and maintain.
     How ecommerce website works :
       1. Create Order with cart items
       2. Payment

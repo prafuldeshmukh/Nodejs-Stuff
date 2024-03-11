@@ -6,7 +6,7 @@ Promise.all([p1,p2,p3]);
              p2 => 1s
              p3 => 2s
              
-             => Promise.all takesn an array of promises
+             => Promise.all takes an array of promises
              => Suppose if all of them get successful it will return u an array of all the three values
                 from these promises
                 U will get the result after 3 seconds

@@ -18,6 +18,10 @@ How async function is a different then normal function
 => Await is a keyword that can only be used inside an async function 
 => Await will resolves the promises
 
+OR 
+
+async/await is a syntax introduced in ES2017 (ES8) that allows writing asynchronous code in a more synchronous-like manner. It builds upon Promises and provides a more intuitive and linear control flow. The `async` keyword is used to define an asynchronous function, and the `await` keyword is used to pause the execution of the function until a Promise is resolved or rejected.
+
 => As soon as this get data function will be executed , It will register promise
    and it will take this callback function and keep it separately till it is resolved
    it will continue executing 
@@ -90,6 +94,14 @@ function getData() {
   console.log("Hello World");
 }
 getData();
+
+Advantages :-
+	Async/await is a new way to write asynchronous code. Previous alternatives for asynchronous code are callbacks and promises.
+	Async/await is actually just syntax sugar built on top of promises. It cannot be used with plain callbacks or node callbacks.
+	Async/await is, like promises, non-blocking.
+	Async/await makes asynchronous code look and behave a little more like synchronous code.
+
+
 */
 
 /*
